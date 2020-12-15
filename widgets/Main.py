@@ -11,26 +11,10 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow):
     def __init__(self, *args, **kwargs):
         super(Main, self).__init__(*args, **kwargs)
         self.setupUi(self)
-        # self.paint_layout = PaintingApplication(self.centralwidget)
+        self.setWindowTitle('Paint App')
+        self.maximized = False
         self.additional_widgets()
-        self.setup_drawing()
-
-    def setup_drawing(self):
-        self.canDraw        = False
-        self.brushSize      = 2
-        self.brushColor     = QtCore.Qt.black
-        self.lastPoint      = QtCore.QPoint()
-
-    def save(self):
-        filePath, _         = QtWidgets.QFileDialog.getSaveFileName(self, "Save Image","", 
-                                "PNG(*.png);;JPG(*.jpg *.jpeg);;All Files (*.*)")
-        if filePath == "":
-            return
-        self.image.save(filePath)
-
-    def clear(self):
-        self.image.fill(QtCore.Qt.white)
-        self.update()
+        self.setup_menubar()
 
     def additional_widgets(self):
         label               = QtWidgets.QLabel('Brush Thickness')
@@ -50,6 +34,49 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow):
         redo_action.setObjectName("redo_action")
         self.main_toolBar.addAction(redo_action)
         redo_action.setText('Redo')
+
+    def do(self, *args, **kwargs):
+        print('JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ')
+        print(args)
+        print(kwargs)
+    
+    def new_window(self):
+        window = Main(self)
+        window.show()
+
+    def zoom(self, op):
+        width = self.width()
+        height = self.height()
+        if op == '+':
+            self.setFixedWidth(width + 10)
+            self.setFixedHeight(height + 10)
+        else:
+            self.setFixedWidth(width - 10)
+            self.setFixedHeight(height - 10)
+    
+    def toogle_full_screen(self):
+        if not self.maximized:
+            self.showFullScreen()
+            self.maximized = True
+        else:
+            self.showNormal()
+            self.maximized = False
+
+    def setup_menubar(self):
+        # File
+        self.action_new.triggered.connect(self.new_window)
+        self.action_open.triggered.connect(self.paint_layout.open)
+        self.action_save.triggered.connect(self.paint_layout.save)
+        self.action_print.triggered.connect(self.do)      # TODO
+
+        # View
+        self.action_zoom_In.triggered.connect(lambda x: self.zoom('+'))
+        self.action_zoom_out.triggered.connect(lambda x: self.zoom('-'))
+        self.action_full_screen.triggered.connect(self.toogle_full_screen)
+
+        # Help
+        self.action_help.triggered.connect(self.do)  # TODO
+        self.action_about.triggered.connect(self.do) # TODO
 
 
     def contextMenuEvent(self, event, *args, **kwargs):

@@ -44,7 +44,9 @@ class PaintingApplication(QtWidgets.QWidget):
     def save(self):
         filePath, _ = QFileDialog.getSaveFileName(self, "Save Image","", 
                                 "PNG(*.png);;JPG(*.jpg *.jpeg);;All Files (*.*)")
+        print(filePath)
         if filePath =="":
+            print("Cannot save")
             return
         self.image.save(filePath)
 

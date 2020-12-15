@@ -56,21 +56,21 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
-             <widget class="QRadioButton" name="radioButton_4">
+             <widget class="QRadioButton" name="flat_cap">
               <property name="text">
                <string>Flat</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radioButton_5">
+             <widget class="QRadioButton" name="square_cap">
               <property name="text">
                <string>Square</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radioButton_6">
+             <widget class="QRadioButton" name="radio_cap">
               <property name="text">
                <string>Round</string>
               </property>
@@ -104,21 +104,21 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
-             <widget class="QRadioButton" name="radioButton_7">
+             <widget class="QRadioButton" name="bevel_cap">
               <property name="text">
                <string>Bevel</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radioButton_9">
+             <widget class="QRadioButton" name="miter_cap">
               <property name="text">
                <string>Miter</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radioButton_8">
+             <widget class="QRadioButton" name="round_cap">
               <property name="text">
                <string>Round</string>
               </property>
