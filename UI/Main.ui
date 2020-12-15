@@ -246,8 +246,6 @@
    <addaction name="toolbar_action_clear"/>
    <addaction name="separator"/>
    <addaction name="toolbar_action_full_screen"/>
-   <addaction name="toolbar_action_undo"/>
-   <addaction name="toolbar_action_redo"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_new">
@@ -345,16 +343,6 @@
   <action name="toolbar_action_full_screen">
    <property name="text">
     <string>full screen</string>
-   </property>
-  </action>
-  <action name="toolbar_action_undo">
-   <property name="text">
-    <string>Undo</string>
-   </property>
-  </action>
-  <action name="toolbar_action_redo">
-   <property name="text">
-    <string>Redo</string>
    </property>
   </action>
   <action name="toolbar_action_clear">
