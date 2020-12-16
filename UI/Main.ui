@@ -56,21 +56,21 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
-             <widget class="QRadioButton" name="flat_cap">
+             <widget class="QRadioButton" name="flat_cap_radio">
               <property name="text">
                <string>Flat</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="square_cap">
+             <widget class="QRadioButton" name="square_cap_radio">
               <property name="text">
                <string>Square</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="radio_cap">
+             <widget class="QRadioButton" name="radio_cap_radio">
               <property name="text">
                <string>Round</string>
               </property>
@@ -89,7 +89,33 @@
          <property name="alignment">
           <set>Qt::AlignCenter</set>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2"/>
+         <layout class="QVBoxLayout" name="verticalLayout_2">
+          <item>
+           <layout class="QVBoxLayout" name="verticalLayout">
+            <item>
+             <widget class="QRadioButton" name="dotted_line_radio">
+              <property name="text">
+               <string>Dotted</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="solid_line_radio">
+              <property name="text">
+               <string>Solid</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QRadioButton" name="dashed_line_radio">
+              <property name="text">
+               <string>Dashed</string>
+              </property>
+             </widget>
+            </item>
+           </layout>
+          </item>
+         </layout>
         </widget>
        </item>
        <item>
@@ -104,21 +130,21 @@
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
-             <widget class="QRadioButton" name="bevel_cap">
+             <widget class="QRadioButton" name="bevel_join_radio">
               <property name="text">
                <string>Bevel</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="miter_cap">
+             <widget class="QRadioButton" name="miter_join_radio">
               <property name="text">
                <string>Miter</string>
               </property>
              </widget>
             </item>
             <item>
-             <widget class="QRadioButton" name="round_cap">
+             <widget class="QRadioButton" name="round_join_radio">
               <property name="text">
                <string>Round</string>
               </property>
@@ -127,39 +153,6 @@
            </layout>
           </item>
          </layout>
-        </widget>
-       </item>
-       <item>
-        <widget class="QGroupBox" name="pen_color_groupBox">
-         <property name="title">
-          <string>Pen color</string>
-         </property>
-         <property name="alignment">
-          <set>Qt::AlignCenter</set>
-         </property>
-         <layout class="QGridLayout" name="gridLayout_7"/>
-        </widget>
-       </item>
-       <item>
-        <widget class="QLabel" name="app_name">
-         <property name="maximumSize">
-          <size>
-           <width>16777215</width>
-           <height>40</height>
-          </size>
-         </property>
-         <property name="frameShape">
-          <enum>QFrame::Box</enum>
-         </property>
-         <property name="frameShadow">
-          <enum>QFrame::Plain</enum>
-         </property>
-         <property name="lineWidth">
-          <number>10</number>
-         </property>
-         <property name="text">
-          <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;PyQt5 Paint v1.0&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-         </property>
         </widget>
        </item>
       </layout>

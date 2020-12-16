@@ -1,3 +1,5 @@
+from functools import partialmethod, partial
+
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui
 from PyQt5 import QtCore
@@ -5,11 +7,13 @@ from PyQt5.QtWidgets import QAction
 from PyQt5.QtGui import QIcon
 from build.main import Ui_MainWindow
 from widgets.Draw import PaintingApplication
+from widgets.Colorpicker import ColorPicker
 
 
-class Main(QtWidgets.QMainWindow, Ui_MainWindow):
+class Main(Ui_MainWindow, QtWidgets.QMainWindow):
 
     statusSignal    = QtCore.pyqtSignal(str)
+    titleSignal     = QtCore.pyqtSignal(str)
 
     def __init__(self, *args, **kwargs):
         super(Main, self).__init__(*args, **kwargs)
@@ -21,13 +25,26 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow):
         self.additional_widgets()
         self.setup_menubar()
         self.setup_sideBar()
+        self.colorPicker = ColorPicker(self.width(), self.height())
+        self.side_bar.layout().addWidget(self.colorPicker)
+        self.colorPicker.setFixedHeight(30)
+        self.paint_layout.set_event_outlet(self.statusSignal, self.titleSignal)
+        self.titleSignal.connect(self.windowTitle_event)
+
+        self.colorPicker.yellow.mousePressEvent = partial(self.set_penColor, color='yellow')
+        self.colorPicker.red.mousePressEvent    = partial(self.set_penColor, color='red')
+        self.colorPicker.blue.mousePressEvent   = partial(self.set_penColor, color='blue')
+        self.colorPicker.green.mousePressEvent  = partial(self.set_penColor, color='green')
         
         self.horizontal_slider.setValue(1)
 
         self.toolbar_action_new.triggered.connect(self.create_new_window)
         self.toolbar_action_full_screen.triggered.connect(self.toogle_full_screen)
         self.toolbar_action_clear.triggered.connect(self.paint_layout.clear)
-        # self.setup_statusBar()
+    
+    def set_penColor(self, event, color='black'):
+        self.paint_layout.brushColor = getattr(QtCore.Qt, color)
+        self.statusSignal.emit('Brush now in {} color'.format(color.title()))
 
     def additional_widgets(self):
         label = QtWidgets.QLabel('Brush Thickness')
@@ -37,18 +54,6 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow):
         self.main_toolBar.addWidget(self.horizontal_slider)
         self.horizontal_slider.valueChanged.connect(self.changeBrushSize)
 
-        undo_action = QAction(self)
-        undo_action.setObjectName("undo_action")
-        self.main_toolBar.addAction(undo_action)
-        undo_action.setText('Undo')
-        # undo_action.triggered.connect() # TODO
-
-        redo_action = QAction(self)
-        redo_action.setObjectName("redo_action")
-        self.main_toolBar.addAction(redo_action)
-        redo_action.setText('Redo')
-        # redo_action.triggered.connect() # TODO
-    
     @QtCore.pyqtSlot(int)
     def changeBrushSize(self, size):
         self.paint_layout.brushSize = size
@@ -69,6 +74,11 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow):
     @QtCore.pyqtSlot(str)
     def statusBar_event(self, mesg):
         self.statusbar.showMessage(mesg)
+
+    @QtCore.pyqtSlot(str)
+    def windowTitle_event(self, mesg):
+        title = self.windowTitle()
+        self.setWindowTitle(f'{mesg} | {title}')
     
     def create_new_window(self):
         window = Main(self)
@@ -150,10 +160,10 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow):
         contextMenu         = QtWidgets.QMenu(self)
 
         save_action         = contextMenu.addAction('&Save')
-        duplicate_action    = contextMenu.addAction('&Duplicate')
-        settings_action     = contextMenu.addAction('S&ettings')
         full_screen_action  = contextMenu.addAction('&Full Screen')
 
         action = contextMenu.exec_(self.mapToGlobal(event.pos()))
         if action == save_action:
-            self.close()
+            self.paint_layout.save()
+        elif action == full_screen_action:
+            self.toogle_full_screen()

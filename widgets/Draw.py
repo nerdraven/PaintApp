@@ -3,6 +3,7 @@ from PyQt5 import QtWidgets
 from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QPixmap
 import sys
 from PyQt5.QtCore import Qt, QPoint
+from pathlib import Path
 
 class PaintingApplication(QtWidgets.QWidget):
     
@@ -19,6 +20,13 @@ class PaintingApplication(QtWidgets.QWidget):
         self.penStyle = Qt.SolidLine
         self.capStyle = Qt.RoundCap
         self.joinStyle = Qt.RoundJoin
+
+        self.saved = False
+        self.filePath = ''
+
+    def set_event_outlet(self, status_bar, title_bar):
+        self.statusBar_event = status_bar
+        self.titleBar_event = title_bar
 
     def mousePressEvent(self, event):
         if event.button() ==Qt.LeftButton:
@@ -47,29 +55,27 @@ class PaintingApplication(QtWidgets.QWidget):
         self.image = self.image.scaled(self.width(), self.height())
 
     def save(self):
-        filePath, _ = QFileDialog.getSaveFileName(self, "Save Image","", 
-                                "PNG(*.png);;JPG(*.jpg *.jpeg);;All Files (*.*)")
-        print(filePath)
-        if filePath =="":
-            print("Cannot save")
-            return
+        filePath = ''
+        if not self.saved:
+            filePath, _ = QFileDialog.getSaveFileName(self, "Save Image","", 
+                                    "PNG(*.png);;JPG(*.jpg *.jpeg);;All Files (*.*)")
+            if filePath == "":
+                return
+            self.saved = True
+            self.filePath = filePath
+        else:
+            filePath = self.filePath
         self.image.save(filePath)
+
+        path = Path(filePath)
+        filePath, _ = path.name.split('.')
+
+        self.statusBar_event.emit('File Saved')
+        self.titleBar_event.emit(f'{filePath} project')
 
     def clear(self):
         self.image.fill(Qt.white)
         self.update()
-
-    def black(self):
-        self.brushColor = Qt.black
-
-    def red(self):
-        self.brushColor = Qt.red
-
-    def green(self):
-        self.brushColor = Qt.green
-
-    def yellow(self):
-        self.brushColor = Qt.yellow
 
     def open(self):
         filePath, _ = QFileDialog.getOpenFileName(self, "Open Image", "",
