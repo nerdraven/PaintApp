@@ -53,7 +53,7 @@ class PaintingApplication(QtWidgets.QWidget):
     def spray_mouseMoveEvent(self, e):
         painter = QtGui.QPainter(self.image)
         p = painter.pen()
-        p.setWidth(self.brushSize)
+        p.setWidth(1)
         p.setColor(self.brushColor)
         painter.setPen(p)
         for _ in range(SPRAY_PARTICLES):
