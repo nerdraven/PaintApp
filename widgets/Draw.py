@@ -53,13 +53,23 @@ class PaintingApplication(QtWidgets.QWidget):
     def spray_mouseMoveEvent(self, e):
         painter = QtGui.QPainter(self.image)
         p = painter.pen()
-        p.setWidth(1)
+        p.setWidth(self.brushSize)
         p.setColor(self.brushColor)
         painter.setPen(p)
         for _ in range(SPRAY_PARTICLES):
             xo = random.gauss(0, self.brushSize)
             yo = random.gauss(0, self.brushSize)
             painter.drawPoint(e.x() + xo, e.y() + yo)
+        self.update()
+
+    def eraser_mouseMoveEvent(self, e):
+        painter = QtGui.QPainter(self.image)
+        p = painter.pen()
+        p.setWidth(self.brushSize)
+        p.setColor(QtCore.Qt.white)
+        painter.setPen(p)
+        p.setCapStyle(QtCore.Qt.SquareCap)
+        painter.drawPoint(e.x(), e.y())
         self.update()
 
     def mouseReleaseEvent(self, event):

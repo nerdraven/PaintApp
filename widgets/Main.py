@@ -48,7 +48,8 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
 
         self.action_spray_paint.triggered.connect(lambda x: self.set_brush('spray'))
         self.toolbar_action_brush.triggered.connect(lambda x: self.set_brush('pen'))
-    
+        self.action_eraser.triggered.connect(lambda x: self.set_brush('eraser'))
+
     def set_penColor(self, event, color='black'):
         self.paint_layout.brushColor = getattr(QtCore.Qt, color)
         self.statusSignal.emit('Brush now in {} color'.format(color.title()))
@@ -58,6 +59,9 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
             self.paint_layout.mouseMoveEvent = self.paint_layout.spray_mouseMoveEvent
         elif brush == 'pen':
             self.paint_layout.mouseMoveEvent = self.paint_layout.pen_mouseMoveEvent
+        elif brush == 'eraser':
+            self.paint_layout.mouseMoveEvent = self.paint_layout.eraser_mouseMoveEvent
+
 
     def additional_widgets(self):
         label = QtWidgets.QLabel('Brush Thickness')

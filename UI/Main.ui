@@ -234,6 +234,7 @@
    <addaction name="toolbar_action_brush"/>
    <addaction name="action_spray_paint"/>
    <addaction name="toolbar_action_text"/>
+   <addaction name="action_eraser"/>
    <addaction name="separator"/>
    <addaction name="toolbar_action_new"/>
    <addaction name="toolbar_action_clear"/>
@@ -341,6 +342,14 @@
   <action name="toolbar_action_clear">
    <property name="text">
     <string>Clear</string>
+   </property>
+  </action>
+  <action name="action_eraser">
+   <property name="text">
+    <string>Eraser</string>
+   </property>
+   <property name="toolTip">
+    <string>Eraser</string>
    </property>
   </action>
  </widget>

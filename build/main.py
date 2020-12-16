@@ -11,7 +11,6 @@
 from PyQt5 import QtCore, QtGui, QtWidgets
 from widgets.Draw import PaintingApplication
 
-
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
@@ -147,6 +146,8 @@ class Ui_MainWindow(object):
         self.toolbar_action_full_screen.setObjectName("toolbar_action_full_screen")
         self.toolbar_action_clear = QtWidgets.QAction(MainWindow)
         self.toolbar_action_clear.setObjectName("toolbar_action_clear")
+        self.action_eraser = QtWidgets.QAction(MainWindow)
+        self.action_eraser.setObjectName("action_eraser")
         self.menuFile.addAction(self.action_new)
         self.menuFile.addAction(self.action_open)
         self.menuFile.addAction(self.action_save)
@@ -162,6 +163,7 @@ class Ui_MainWindow(object):
         self.main_toolBar.addAction(self.toolbar_action_brush)
         self.main_toolBar.addAction(self.action_spray_paint)
         self.main_toolBar.addAction(self.toolbar_action_text)
+        self.main_toolBar.addAction(self.action_eraser)
         self.main_toolBar.addSeparator()
         self.main_toolBar.addAction(self.toolbar_action_new)
         self.main_toolBar.addAction(self.toolbar_action_clear)
@@ -215,3 +217,5 @@ class Ui_MainWindow(object):
         self.action_spray_paint.setText(_translate("MainWindow", "Spray Paint"))
         self.toolbar_action_full_screen.setText(_translate("MainWindow", "full screen"))
         self.toolbar_action_clear.setText(_translate("MainWindow", "Clear"))
+        self.action_eraser.setText(_translate("MainWindow", "Eraser"))
+        self.action_eraser.setToolTip(_translate("MainWindow", "Eraser"))
