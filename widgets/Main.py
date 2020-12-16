@@ -31,6 +31,10 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         self.paint_layout.set_event_outlet(self.statusSignal, self.titleSignal)
         self.titleSignal.connect(self.windowTitle_event)
 
+        self.solid_line_radio.toggle()
+        self.round_join_radio.toggle()
+        self.radio_cap_radio.toggle()
+
         self.colorPicker.yellow.mousePressEvent = partial(self.set_penColor, color='yellow')
         self.colorPicker.red.mousePressEvent    = partial(self.set_penColor, color='red')
         self.colorPicker.blue.mousePressEvent   = partial(self.set_penColor, color='blue')
@@ -41,10 +45,19 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         self.toolbar_action_new.triggered.connect(self.create_new_window)
         self.toolbar_action_full_screen.triggered.connect(self.toogle_full_screen)
         self.toolbar_action_clear.triggered.connect(self.paint_layout.clear)
+
+        self.action_spray_paint.triggered.connect(lambda x: self.set_brush('spray'))
+        self.toolbar_action_brush.triggered.connect(lambda x: self.set_brush('pen'))
     
     def set_penColor(self, event, color='black'):
         self.paint_layout.brushColor = getattr(QtCore.Qt, color)
         self.statusSignal.emit('Brush now in {} color'.format(color.title()))
+    
+    def set_brush(self, brush):
+        if brush == 'spray':
+            self.paint_layout.mouseMoveEvent = self.paint_layout.spray_mouseMoveEvent
+        elif brush == 'pen':
+            self.paint_layout.mouseMoveEvent = self.paint_layout.pen_mouseMoveEvent
 
     def additional_widgets(self):
         label = QtWidgets.QLabel('Brush Thickness')

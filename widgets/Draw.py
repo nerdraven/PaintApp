@@ -1,15 +1,21 @@
-from PyQt5.QtWidgets import QApplication, QMainWindow,QAction, QFileDialog
-from PyQt5 import QtWidgets
-from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QPixmap
 import sys
-from PyQt5.QtCore import Qt, QPoint
+import random
 from pathlib import Path
+
+from PyQt5 import QtCore, QtGui, QtWidgets
+from PyQt5.QtCore import Qt, QPoint
+
+from PyQt5.QtWidgets import QApplication, QMainWindow,QAction, QFileDialog
+from PyQt5.QtGui import QIcon, QImage, QPainter, QPen, QPixmap
+
+
+SPRAY_PARTICLES = 100
 
 class PaintingApplication(QtWidgets.QWidget):
     
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
-        self.image = QImage(self.size(), QImage.Format_RGB32)
+        self.image = QtGui.QImage(self.size(), QImage.Format_RGB32)
         self.image.fill(Qt.white)
 
         self.drawing = False
@@ -24,6 +30,8 @@ class PaintingApplication(QtWidgets.QWidget):
         self.saved = False
         self.filePath = ''
 
+        self.mouseMoveEvent = self.pen_mouseMoveEvent
+
     def set_event_outlet(self, status_bar, title_bar):
         self.statusBar_event = status_bar
         self.titleBar_event = title_bar
@@ -32,9 +40,8 @@ class PaintingApplication(QtWidgets.QWidget):
         if event.button() ==Qt.LeftButton:
             self.drawing = True
             self.lastPoint = event.pos()
-            print(self.lastPoint)
 
-    def mouseMoveEvent(self, event):
+    def pen_mouseMoveEvent(self, event):
      if event.buttons() & Qt.LeftButton & self.drawing:
             painter = QPainter(self.image)
             painter.setPen(QPen(self.brushColor, self.brushSize, 
@@ -42,6 +49,18 @@ class PaintingApplication(QtWidgets.QWidget):
             painter.drawLine(self.lastPoint, event.pos())
             self.lastPoint= event.pos()
             self.update()
+
+    def spray_mouseMoveEvent(self, e):
+        painter = QtGui.QPainter(self.image)
+        p = painter.pen()
+        p.setWidth(1)
+        p.setColor(self.brushColor)
+        painter.setPen(p)
+        for _ in range(SPRAY_PARTICLES):
+            xo = random.gauss(0, self.brushSize)
+            yo = random.gauss(0, self.brushSize)
+            painter.drawPoint(e.x() + xo, e.y() + yo)
+        self.update()
 
     def mouseReleaseEvent(self, event):
         if event.button == Qt.LeftButton:
