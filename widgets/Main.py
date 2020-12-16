@@ -85,10 +85,49 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow):
             self.setFixedWidth(width - 10)
             self.setFixedHeight(height - 10)
             self.statusSignal.emit('Zoomed Out')
+
+    def set_capStyle(self, val):
+        values = {
+                'round': QtCore.Qt.RoundCap,
+                'square': QtCore.Qt.SquareCap,
+                'flat': QtCore.Qt.FlatCap
+            }
+        self.paint_layout.capStyle = values.pop(val)
+    
+    def set_lineStyle(self, val):
+        values = {
+            'solid': QtCore.Qt.SolidLine,
+            'dotted': QtCore.Qt.DotLine,
+            'dashed': QtCore.Qt.DashLine,
+            'dashdot': QtCore.Qt.DashDotDotLine,
+            'dashdotdot': QtCore.Qt.DashDotDotLine
+        }
+        self.paint_layout.penStyle = values.pop(val)
+    
+    def set_joinStyle(self, val):
+        values = {
+            'bevel': QtCore.Qt.BevelJoin,
+            'miter': QtCore.Qt.MiterJoin,
+            'round': QtCore.Qt.RoundJoin
+        }
+        self.paint_layout.joinStyle = values.pop(val)
     
     def setup_sideBar(self):
         # Cap Style
-        print(self.flat_cap)
+        self.flat_cap_radio.toggled.connect(lambda x: self.set_capStyle('flat'))
+        self.radio_cap_radio.toggled.connect(lambda x: self.set_capStyle('round'))
+        self.square_cap_radio.toggled.connect(lambda x: self.set_capStyle('square'))
+
+        # Line Style
+        self.dotted_line_radio.toggled.connect(lambda x: self.set_lineStyle('dotted'))
+        self.dashed_line_radio.toggled.connect(lambda x: self.set_lineStyle('dashed'))
+        self.solid_line_radio.toggled.connect(lambda x: self.set_lineStyle('solid'))
+
+        # Join Style
+        self.miter_join_radio.toggled.connect(lambda x: self.set_joinStyle('miter'))
+        self.bevel_join_radio.toggled.connect(lambda x: self.set_joinStyle('bevel'))
+        self.round_join_radio.toggled.connect(lambda x: self.set_joinStyle('round'))
+
 
     def setup_menubar(self):
         # File
