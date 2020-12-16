@@ -9,6 +9,9 @@ from build.main import Ui_MainWindow
 from widgets.Draw import PaintingApplication
 from widgets.Colorpicker import ColorPicker
 
+from widgets.about import AboutUI
+from widgets.help import HelpUI
+
 
 class Main(Ui_MainWindow, QtWidgets.QMainWindow):
 
@@ -169,9 +172,16 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         self.action_full_screen.triggered.connect(self.toogle_full_screen)
 
         # Help
-        self.action_help.triggered.connect(self.do)  # TODO
-        self.action_about.triggered.connect(self.do) # TODO
-
+        self.action_help.triggered.connect(self.open_help)  # TODO
+        self.action_about.triggered.connect(self.open_about) # TODO
+    
+    def open_about(self):
+        self.app = AboutUI()
+        self.app.show()
+    
+    def open_help(self):
+        self.app = HelpUI()
+        self.app.show()
 
     def contextMenuEvent(self, event, *args, **kwargs):
         contextMenu         = QtWidgets.QMenu(self)
