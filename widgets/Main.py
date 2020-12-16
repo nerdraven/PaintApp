@@ -8,51 +8,50 @@ from widgets.Draw import PaintingApplication
 
 
 class Main(QtWidgets.QMainWindow, Ui_MainWindow):
+
+    statusSignal    = QtCore.pyqtSignal(str)
+
     def __init__(self, *args, **kwargs):
         super(Main, self).__init__(*args, **kwargs)
         self.setupUi(self)
         self.setWindowTitle('Paint App')
         self.maximized = False
+        self.statusSignal.connect(self.statusBar_event)
+        self.statusSignal.emit('Hello World')
         self.additional_widgets()
         self.setup_menubar()
+        self.setup_sideBar()
+        
+        self.horizontal_slider.setValue(1)
+
+        self.toolbar_action_new.triggered.connect(self.create_new_window)
+        self.toolbar_action_full_screen.triggered.connect(self.toogle_full_screen)
+        self.toolbar_action_clear.triggered.connect(self.paint_layout.clear)
+        # self.setup_statusBar()
 
     def additional_widgets(self):
-        label               = QtWidgets.QLabel('Brush Thickness')
+        label = QtWidgets.QLabel('Brush Thickness')
         self.main_toolBar.addWidget(label)
-
         self.main_toolBar.addSeparator()
-
-        self.horizontal_slider    = QtWidgets.QSlider(QtCore.Qt.Horizontal)
+        self.horizontal_slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
         self.main_toolBar.addWidget(self.horizontal_slider)
+        self.horizontal_slider.valueChanged.connect(self.changeBrushSize)
 
         undo_action = QAction(self)
         undo_action.setObjectName("undo_action")
         self.main_toolBar.addAction(undo_action)
         undo_action.setText('Undo')
+        # undo_action.triggered.connect() # TODO
 
         redo_action = QAction(self)
         redo_action.setObjectName("redo_action")
         self.main_toolBar.addAction(redo_action)
         redo_action.setText('Redo')
-
-    def do(self, *args, **kwargs):
-        print('JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ')
-        print(args)
-        print(kwargs)
+        # redo_action.triggered.connect() # TODO
     
-    def new_window(self):
-        window = Main(self)
-        window.show()
-
-    def zoom(self, op):
-        width = self.width()
-        height = self.height()
-        if op == '+':
-            self.setFixedWidth(width + 10)
-            self.setFixedHeight(height + 10)
-        else:
-            self.setFixedWidth(width - 10)
-            self.setFixedHeight(height - 10)
+    @QtCore.pyqtSlot(int)
+    def changeBrushSize(self, size):
+        self.paint_layout.brushSize = size
     
     def toogle_full_screen(self):
         if not self.maximized:
@@ -62,9 +61,38 @@ class Main(QtWidgets.QMainWindow, Ui_MainWindow):
             self.showNormal()
             self.maximized = False
 
+    def do(self, *args, **kwargs):
+        print('JJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJJ')
+        print(args)
+        print(kwargs)
+
+    @QtCore.pyqtSlot(str)
+    def statusBar_event(self, mesg):
+        self.statusbar.showMessage(mesg)
+    
+    def create_new_window(self):
+        window = Main(self)
+        window.show()
+
+    def zoom(self, op):
+        width = self.width()
+        height = self.height()
+        if op == '+':
+            self.setFixedWidth(width + 10)
+            self.setFixedHeight(height + 10)
+            self.statusSignal.emit('Zoomed In')
+        else:
+            self.setFixedWidth(width - 10)
+            self.setFixedHeight(height - 10)
+            self.statusSignal.emit('Zoomed Out')
+    
+    def setup_sideBar(self):
+        # Cap Style
+        print(self.flat_cap)
+
     def setup_menubar(self):
         # File
-        self.action_new.triggered.connect(self.new_window)
+        self.action_new.triggered.connect(self.create_new_window)
         self.action_open.triggered.connect(self.paint_layout.open)
         self.action_save.triggered.connect(self.paint_layout.save)
         self.action_print.triggered.connect(self.do)      # TODO

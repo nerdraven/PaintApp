@@ -12,9 +12,13 @@ class PaintingApplication(QtWidgets.QWidget):
         self.image.fill(Qt.white)
 
         self.drawing = False
-        self.brushSize = 3
+        self.brushSize = 1
         self.brushColor = Qt.black
         self.lastPoint = QPoint()
+
+        self.penStyle = Qt.SolidLine
+        self.capStyle = Qt.RoundCap
+        self.joinStyle = Qt.RoundJoin
 
     def mousePressEvent(self, event):
         if event.button() ==Qt.LeftButton:
@@ -25,7 +29,8 @@ class PaintingApplication(QtWidgets.QWidget):
     def mouseMoveEvent(self, event):
      if event.buttons() & Qt.LeftButton & self.drawing:
             painter = QPainter(self.image)
-            painter.setPen(QPen(self.brushColor, self.brushSize, Qt.SolidLine, Qt.RoundCap, Qt.RoundJoin))
+            painter.setPen(QPen(self.brushColor, self.brushSize, 
+                            self.penStyle, self.capStyle, self.joinStyle))
             painter.drawLine(self.lastPoint, event.pos())
             self.lastPoint= event.pos()
             self.update()
@@ -53,18 +58,6 @@ class PaintingApplication(QtWidgets.QWidget):
     def clear(self):
         self.image.fill(Qt.white)
         self.update()
-
-    def threepx(self):
-        self.brushSize = 3
-
-    def fivepx(self):
-        self.brushSize = 5
-
-    def sevenpx(self):
-        self.brushSize = 7
-
-    def ninepx(self):
-        self.brushSize = 9
 
     def black(self):
         self.brushColor = Qt.black
