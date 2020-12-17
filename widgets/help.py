@@ -7,7 +7,6 @@ class HelpUI(QtWidgets.QWidget, Ui_Form):
         super(HelpUI, self).__init__(*args, **kwargs)
         self.setupUi(self)
 
-
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
     window = HelpUI()
