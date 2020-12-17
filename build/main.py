@@ -25,14 +25,6 @@ class Ui_MainWindow(object):
         self.side_bar.setObjectName("side_bar")
         self.verticalLayout_4 = QtWidgets.QVBoxLayout(self.side_bar)
         self.verticalLayout_4.setObjectName("verticalLayout_4")
-        self.groupBox = QtWidgets.QGroupBox(self.side_bar)
-        self.groupBox.setAlignment(QtCore.Qt.AlignCenter)
-        self.groupBox.setFlat(False)
-        self.groupBox.setCheckable(False)
-        self.groupBox.setObjectName("groupBox")
-        self.gridLayout_3 = QtWidgets.QGridLayout(self.groupBox)
-        self.gridLayout_3.setObjectName("gridLayout_3")
-        self.verticalLayout_4.addWidget(self.groupBox)
         self.cap_style_groupBox = QtWidgets.QGroupBox(self.side_bar)
         self.cap_style_groupBox.setAlignment(QtCore.Qt.AlignCenter)
         self.cap_style_groupBox.setObjectName("cap_style_groupBox")
@@ -176,7 +168,6 @@ class Ui_MainWindow(object):
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
         MainWindow.setWindowTitle(_translate("MainWindow", "MainWindow"))
-        self.groupBox.setTitle(_translate("MainWindow", "Shapes"))
         self.cap_style_groupBox.setTitle(_translate("MainWindow", "Cap Style"))
         self.flat_cap_radio.setText(_translate("MainWindow", "Flat"))
         self.square_cap_radio.setText(_translate("MainWindow", "Square"))

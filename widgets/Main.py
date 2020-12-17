@@ -59,7 +59,7 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         children = self.side_bar.children()[1:]
         for child in children:
             child.setCursor(QtCore.Qt.PointingHandCursor)
-
+        
     def set_penColor(self, event, color='black'):
         self.paint_layout.brushColor = getattr(QtCore.Qt, color)
         self.statusSignal.emit('Brush now in {} color'.format(color.title()))

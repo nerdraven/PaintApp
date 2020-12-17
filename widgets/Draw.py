@@ -4,7 +4,6 @@ from pathlib import Path
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
-
 SPRAY_PARTICLES = 100
 
 class PaintingApplication(QtWidgets.QWidget):
