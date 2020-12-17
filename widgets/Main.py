@@ -68,6 +68,8 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         message = ''
         if brush == 'spray':
             self.paint_layout.mouseMoveEvent = self.paint_layout.spray_mouseMoveEvent
+            self.paint_layout.brushSize = 20
+            self.horizontal_slider.setValue(20)
             message = 'Brush is now in Spray mode'
         elif brush == 'pen':
             self.paint_layout.mouseMoveEvent = self.paint_layout.pen_mouseMoveEvent

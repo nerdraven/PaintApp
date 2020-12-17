@@ -178,6 +178,7 @@
     <addaction name="action_open"/>
     <addaction name="action_save"/>
     <addaction name="action_print"/>
+    <addaction name="actionExit"/>
    </widget>
    <widget class="QMenu" name="menuView">
     <property name="title">
@@ -242,6 +243,10 @@
    </property>
   </action>
   <action name="action_save">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/save.png</normaloff>:/icons/icons/save.png</iconset>
+   </property>
    <property name="text">
     <string>&amp;Save</string>
    </property>
@@ -250,8 +255,12 @@
    </property>
   </action>
   <action name="action_print">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/save.png</normaloff>:/icons/icons/save.png</iconset>
+   </property>
    <property name="text">
-    <string>&amp;Print</string>
+    <string>Save as</string>
    </property>
    <property name="shortcut">
     <string>Ctrl+P</string>
@@ -323,6 +332,10 @@
    </property>
   </action>
   <action name="toolbar_action_clear">
+   <property name="icon">
+    <iconset resource="icons.qrc">
+     <normaloff>:/icons/icons/clear.png</normaloff>:/icons/icons/clear.png</iconset>
+   </property>
    <property name="text">
     <string>Clear</string>
    </property>
@@ -335,7 +348,14 @@
     <string>Eraser</string>
    </property>
   </action>
+  <action name="actionExit">
+   <property name="text">
+    <string>&amp;Exit</string>
+   </property>
+  </action>
  </widget>
- <resources/>
+ <resources>
+  <include location="icons.qrc"/>
+ </resources>
  <connections/>
 </ui>

@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="icons">
+    <file>icons/save.png</file>
+    <file>icons/paint-brush.png</file>
+    <file>icons/clear.png</file>
+  </qresource>
+</RCC>
