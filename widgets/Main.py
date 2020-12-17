@@ -3,8 +3,7 @@ from functools import partialmethod, partial
 from PyQt5 import QtWidgets
 from PyQt5 import QtGui
 from PyQt5 import QtCore
-from PyQt5.QtWidgets import QAction
-from PyQt5.QtGui import QIcon
+
 from build.main import Ui_MainWindow
 from widgets.Draw import PaintingApplication
 from widgets.Colorpicker import ColorPicker
@@ -31,6 +30,7 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         self.setup_sideBar()
         self.colorPicker = ColorPicker(self.colorSignal)
         self.side_bar.layout().addWidget(self.colorPicker)
+        # print(self.side_bar.children())
         self.colorPicker.setFixedHeight(30)
         self.paint_layout.set_event_outlet(self.statusSignal, self.titleSignal)
         self.titleSignal.connect(self.windowTitle_event)
@@ -54,25 +54,36 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         self.action_spray_paint.triggered.connect(lambda x: self.set_brush('spray'))
         self.toolbar_action_brush.triggered.connect(lambda x: self.set_brush('pen'))
         self.action_eraser.triggered.connect(lambda x: self.set_brush('eraser'))
+        self.toolbar_action_text.triggered.connect(self.do)
+
+        children = self.side_bar.children()[1:]
+        for child in children:
+            child.setCursor(QtCore.Qt.PointingHandCursor)
 
     def set_penColor(self, event, color='black'):
         self.paint_layout.brushColor = getattr(QtCore.Qt, color)
         self.statusSignal.emit('Brush now in {} color'.format(color.title()))
     
     def set_brush(self, brush):
+        message = ''
         if brush == 'spray':
             self.paint_layout.mouseMoveEvent = self.paint_layout.spray_mouseMoveEvent
+            message = 'Brush is now in Spray mode'
         elif brush == 'pen':
             self.paint_layout.mouseMoveEvent = self.paint_layout.pen_mouseMoveEvent
+            message = 'Brush is now in Pen mode'
         elif brush == 'eraser':
             self.paint_layout.mouseMoveEvent = self.paint_layout.eraser_mouseMoveEvent
-
+            message = 'Brush is now in Eraser mode'
+        self.statusSignal.emit(message)
 
     def additional_widgets(self):
         label = QtWidgets.QLabel('Brush Thickness')
         self.main_toolBar.addWidget(label)
         self.main_toolBar.addSeparator()
+        self.main_toolBar.setCursor(QtCore.Qt.PointingHandCursor)
         self.horizontal_slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
+        self.horizontal_slider.setCursor(QtCore.Qt.PointingHandCursor)
         self.main_toolBar.addWidget(self.horizontal_slider)
         self.horizontal_slider.valueChanged.connect(self.changeBrushSize)
 
@@ -128,6 +139,7 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
                 'flat': QtCore.Qt.FlatCap
             }
         self.paint_layout.capStyle = values.pop(val)
+        self.statusSignal.emit('Changed the cap style to {} cap'.format(val))
     
     def set_lineStyle(self, val):
         values = {
@@ -138,6 +150,7 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
             'dashdotdot': QtCore.Qt.DashDotDotLine
         }
         self.paint_layout.penStyle = values.pop(val)
+        self.statusSignal.emit('Changed the line style to {}'.format(val))
     
     def set_joinStyle(self, val):
         values = {
@@ -146,6 +159,7 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
             'round': QtCore.Qt.RoundJoin
         }
         self.paint_layout.joinStyle = values.pop(val)
+        self.statusSignal.emit('Changed the join style to {} join'.format(val))
     
     def setup_sideBar(self):
         # Cap Style
