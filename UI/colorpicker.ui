@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>188</width>
-    <height>34</height>
+    <width>298</width>
+    <height>43</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -41,6 +41,16 @@
       <widget class="QWidget" name="yellow" native="true">
        <property name="styleSheet">
         <string notr="true">background-color: rgb(255, 255, 0);</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QLabel" name="more_color">
+       <property name="styleSheet">
+        <string notr="true">background-color: rgb(85, 0, 0);</string>
+       </property>
+       <property name="text">
+        <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p align=&quot;center&quot;&gt;&lt;span style=&quot; font-size:20pt;&quot;&gt;+&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
        </property>
       </widget>
      </item>

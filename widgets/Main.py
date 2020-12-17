@@ -17,6 +17,7 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
 
     statusSignal    = QtCore.pyqtSignal(str)
     titleSignal     = QtCore.pyqtSignal(str)
+    colorSignal     = QtCore.pyqtSignal(QtGui.QColor)
 
     def __init__(self, *args, **kwargs):
         super(Main, self).__init__(*args, **kwargs)
@@ -28,11 +29,12 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         self.additional_widgets()
         self.setup_menubar()
         self.setup_sideBar()
-        self.colorPicker = ColorPicker(self.width(), self.height())
+        self.colorPicker = ColorPicker(self.colorSignal)
         self.side_bar.layout().addWidget(self.colorPicker)
         self.colorPicker.setFixedHeight(30)
         self.paint_layout.set_event_outlet(self.statusSignal, self.titleSignal)
         self.titleSignal.connect(self.windowTitle_event)
+        self.colorSignal.connect(self.changeBrushColor)
 
         self.solid_line_radio.toggle()
         self.round_join_radio.toggle()
@@ -77,6 +79,9 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
     @QtCore.pyqtSlot(int)
     def changeBrushSize(self, size):
         self.paint_layout.brushSize = size
+    
+    def changeBrushColor(self, color):
+        self.paint_layout.brushColor = color
     
     def toogle_full_screen(self):
         if not self.maximized:
@@ -176,12 +181,12 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         self.action_about.triggered.connect(self.open_about) # TODO
     
     def open_about(self):
-        self.app = AboutUI()
-        self.app.show()
+        self.aboutUi = AboutUI()
+        self.aboutUi.show()
     
     def open_help(self):
-        self.app = HelpUI()
-        self.app.show()
+        self.helpUi = HelpUI()
+        self.helpUi.show()
 
     def contextMenuEvent(self, event, *args, **kwargs):
         contextMenu         = QtWidgets.QMenu(self)

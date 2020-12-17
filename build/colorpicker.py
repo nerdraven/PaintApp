@@ -14,7 +14,7 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_colorpicker(object):
     def setupUi(self, colorpicker):
         colorpicker.setObjectName("colorpicker")
-        colorpicker.resize(188, 34)
+        colorpicker.resize(298, 43)
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(colorpicker)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.horizontalLayout = QtWidgets.QHBoxLayout()
@@ -35,6 +35,10 @@ class Ui_colorpicker(object):
         self.yellow.setStyleSheet("background-color: rgb(255, 255, 0);")
         self.yellow.setObjectName("yellow")
         self.horizontalLayout.addWidget(self.yellow)
+        self.more_color = QtWidgets.QLabel(colorpicker)
+        self.more_color.setStyleSheet("background-color: rgb(85, 0, 0);")
+        self.more_color.setObjectName("more_color")
+        self.horizontalLayout.addWidget(self.more_color)
         self.horizontalLayout_2.addLayout(self.horizontalLayout)
 
         self.retranslateUi(colorpicker)
@@ -43,3 +47,4 @@ class Ui_colorpicker(object):
     def retranslateUi(self, colorpicker):
         _translate = QtCore.QCoreApplication.translate
         colorpicker.setWindowTitle(_translate("colorpicker", "Form"))
+        self.more_color.setText(_translate("colorpicker", "<html><head/><body><p align=\"center\"><span style=\" font-size:20pt;\">+</span></p></body></html>"))
