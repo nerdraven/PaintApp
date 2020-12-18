@@ -6,6 +6,7 @@ class ColorPicker(QtWidgets.QWidget, Ui_colorpicker):
     def __init__(self, color_signal, *args, **kwargs):
         super(ColorPicker, self).__init__(*args, **kwargs)
         self.setupUi(self)
+        self.setMinimumHeight(60)
 
         self.color_signal = color_signal
         self.more_color.mousePressEvent = self.get_color

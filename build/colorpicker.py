@@ -14,7 +14,8 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_colorpicker(object):
     def setupUi(self, colorpicker):
         colorpicker.setObjectName("colorpicker")
-        colorpicker.resize(302, 78)
+        colorpicker.resize(302, 100)
+        colorpicker.setMinimumSize(QtCore.QSize(0, 100))
         self.horizontalLayout_2 = QtWidgets.QHBoxLayout(colorpicker)
         self.horizontalLayout_2.setObjectName("horizontalLayout_2")
         self.gridLayout = QtWidgets.QGridLayout()
