@@ -4,4 +4,21 @@
     <file>icons/paint-brush.png</file>
     <file>icons/clear.png</file>
   </qresource>
+  <qresource prefix="cap">
+    <file>icons/square-cap.png</file>
+    <file>icons/round-cap.png</file>
+    <file>icons/flat-cap.png</file>
+  </qresource>
+  <qresource prefix="join">
+    <file>icons/round-join.png</file>
+    <file>icons/miter-join.png</file>
+    <file>icons/bevel-join.png</file>
+  </qresource>
+  <qresource prefix="line">
+    <file>icons/solid-line.png</file>
+    <file>icons/dot-line.png</file>
+    <file>icons/dash-dot-line.png</file>
+    <file>icons/dash-dot-dot-line.png</file>
+    <file>icons/dash-line.png</file>
+  </qresource>
 </RCC>

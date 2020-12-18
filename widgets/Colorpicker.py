@@ -8,6 +8,7 @@ class ColorPicker(QtWidgets.QWidget, Ui_colorpicker):
         self.setupUi(self)
         self.setMinimumHeight(60)
 
+        # This will update the color of the pen used
         self.color_signal = color_signal
         self.more_color.mousePressEvent = self.get_color
 

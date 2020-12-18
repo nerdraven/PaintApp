@@ -63,6 +63,9 @@
            <layout class="QVBoxLayout" name="verticalLayout_3">
             <item>
              <widget class="QRadioButton" name="flat_cap_radio">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/cap/icons/flat-cap.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>Flat</string>
               </property>
@@ -70,6 +73,9 @@
             </item>
             <item>
              <widget class="QRadioButton" name="square_cap_radio">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/cap/icons/square-cap.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>Square</string>
               </property>
@@ -77,6 +83,9 @@
             </item>
             <item>
              <widget class="QRadioButton" name="round_cap_radio">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/cap/icons/round-cap.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>Round</string>
               </property>
@@ -109,6 +118,9 @@
            <layout class="QVBoxLayout" name="verticalLayout">
             <item>
              <widget class="QRadioButton" name="dotted_line_radio">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/line/icons/dot-line.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>Dotted</string>
               </property>
@@ -116,6 +128,9 @@
             </item>
             <item>
              <widget class="QRadioButton" name="dash_dot_dot_line_radio">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/line/icons/dash-dot-dot-line.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>Dash dot dot</string>
               </property>
@@ -123,6 +138,9 @@
             </item>
             <item>
              <widget class="QRadioButton" name="solid_line_radio">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/line/icons/solid-line.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>Solid</string>
               </property>
@@ -130,6 +148,9 @@
             </item>
             <item>
              <widget class="QRadioButton" name="dash_dot_line_radio">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/line/icons/dash-dot-line.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>Dash dot</string>
               </property>
@@ -137,6 +158,9 @@
             </item>
             <item>
              <widget class="QRadioButton" name="dashed_line_radio">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/line/icons/dash-line.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>Dashed</string>
               </property>
@@ -172,6 +196,9 @@
            <layout class="QVBoxLayout" name="verticalLayout_6">
             <item>
              <widget class="QRadioButton" name="bevel_join_radio">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/join/icons/bevel-join.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>Bevel</string>
               </property>
@@ -179,6 +206,9 @@
             </item>
             <item>
              <widget class="QRadioButton" name="miter_join_radio">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/join/icons/miter-join.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>Miter</string>
               </property>
@@ -186,6 +216,9 @@
             </item>
             <item>
              <widget class="QRadioButton" name="round_join_radio">
+              <property name="toolTip">
+               <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;img src=&quot;:/join/icons/round-join.png&quot;/&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+              </property>
               <property name="text">
                <string>Round</string>
               </property>
@@ -286,7 +319,7 @@
    <addaction name="action_eraser"/>
    <addaction name="separator"/>
    <addaction name="action_new"/>
-   <addaction name="action_clear"/>
+   <addaction name="action_clear_2"/>
    <addaction name="separator"/>
    <addaction name="action_fullScreen"/>
    <addaction name="separator"/>
@@ -408,6 +441,14 @@
    </property>
    <property name="toolTip">
     <string>Exit the application</string>
+   </property>
+  </action>
+  <action name="action_clear_2">
+   <property name="text">
+    <string>Clear</string>
+   </property>
+   <property name="toolTip">
+    <string>Clear the canvas</string>
    </property>
   </action>
  </widget>

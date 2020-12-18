@@ -9,7 +9,6 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class PaintingApplication(QtWidgets.QWidget):
 
     def __init__(self, *args, **kwargs):
-        # Initialization
         super().__init__(*args, **kwargs)
         self.brushSize = 1                          # The initial brush size
         self.spray_size = 100                       # The area occupied by one spray
@@ -37,6 +36,7 @@ class PaintingApplication(QtWidgets.QWidget):
         self.saveAs = partial(self.save, saveAs=True)
 
     def set_event_outlet(self, status_bar, title_bar):
+        """ This sets where the signals are been sent to """
         self.statusBar_event = status_bar
         self.titleBar_event = title_bar
 
@@ -54,6 +54,7 @@ class PaintingApplication(QtWidgets.QWidget):
         canvas_painter.drawImage(self.rect(), self.image, self.image.rect())
 
     def resizeEvent(self, event: QtGui.QMouseEvent):
+        """ When the window size has changed you scale the image """
         self.image = self.image.scaled(self.width(), self.height())
 
     def save(self, save_as=False):
@@ -63,8 +64,10 @@ class PaintingApplication(QtWidgets.QWidget):
             file_path, _ = QtWidgets.QFileDialog.getSaveFileName(
                             self, "Save Image", "",
                                   "PNG(*.png);;JPG(*.jpg *.jpeg);;All Files (*.*)")
+            # If the user exited the dialog
             if file_path == "":
                 self.statusBar_event.emit('No file path provided')
+                # Here it will just return to the app
                 return
             self.saved = True
             self.filePath = file_path
@@ -72,13 +75,16 @@ class PaintingApplication(QtWidgets.QWidget):
             file_path = self.filePath
         self.image.save(file_path)
 
+        # Get just the name of the file
         path = Path(file_path)
         file_path, _ = path.name.split('.')
 
+        # Update both the status and title bar
         self.statusBar_event.emit('File Saved')
         self.titleBar_event.emit(f'{file_path} project')
 
     def clear(self):
+        """ Fill the canvas with white color """
         self.image.fill(QtCore.Qt.white)
         self.update()
 
@@ -86,10 +92,12 @@ class PaintingApplication(QtWidgets.QWidget):
         file_path, _ = QtWidgets.QFileDialog.getOpenFileName(
                         self, "Open Image", "",
                         "PNG(*.png);;JPG(*.jpg *.jpeg);;All Files (*.*)")
+        # If the user exited the dialog
         if file_path == "":
             return
         with open(file_path, 'rb') as f:
             content = f.read()
+        # Load the image data from the BytesIO buffer
         self.image.loadFromData(content)
         width = self.width()
         height = self.height()
@@ -98,6 +106,7 @@ class PaintingApplication(QtWidgets.QWidget):
 
     # All the brushes Handlers
     def pen_mouseMoveEvent(self, event):
+        """ Check if the button clicked was the left one """
         if event.buttons() & QtCore.Qt.LeftButton & self.drawing:
             painter = QtGui.QPainter(self.image)
             painter.setPen(QtGui.QPen(self.brushColor, self.brushSize,
@@ -107,6 +116,7 @@ class PaintingApplication(QtWidgets.QWidget):
             self.update()
 
     def spray_mouseMoveEvent(self, e):
+        """ This puts dots at random point within the specified radius """
         painter = QtGui.QPainter(self.image)
         p = painter.pen()
         p.setWidth(1)
@@ -119,6 +129,7 @@ class PaintingApplication(QtWidgets.QWidget):
         self.update()
 
     def eraser_mouseMoveEvent(self, e):
+        """ This is pen brush using the square cap """
         painter = QtGui.QPainter(self.image)
         p = painter.pen()
         p.setWidth(self.brushSize)

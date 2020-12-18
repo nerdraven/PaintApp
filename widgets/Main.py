@@ -99,19 +99,13 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         self.flat_cap_radio.toggled.connect(lambda x: self.set_capStyle('flat'))
         self.round_cap_radio.toggled.connect(lambda x: self.set_capStyle('round'))
         self.square_cap_radio.toggled.connect(lambda x: self.set_capStyle('square'))
-        self.square_cap_radio.setToolTip('<img src=":/icons/icons/paint-brush.png">')
 
         # Line Style
         self.dotted_line_radio.toggled.connect(lambda x: self.set_lineStyle('dotted'))
-        self.dotted_line_radio.setText('..........')
         self.dashed_line_radio.toggled.connect(lambda x: self.set_lineStyle('dashed'))
-        self.dashed_line_radio.setText('----------')
         self.solid_line_radio.toggled.connect(lambda x: self.set_lineStyle('solid'))
-        self.solid_line_radio.setText('____________')
         self.dash_dot_line_radio.toggled.connect(lambda x: self.set_lineStyle('dashdot'))
-        self.dash_dot_line_radio.setText('-.-.-.-.-.-')
         self.dash_dot_dot_line_radio.toggled.connect(lambda x: self.set_lineStyle('dashdotdot'))
-        self.dash_dot_dot_line_radio.setText('-..-..-..-..')
 
         # Join Style
         self.miter_join_radio.toggled.connect(lambda x: self.set_joinStyle('miter'))

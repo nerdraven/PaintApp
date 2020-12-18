@@ -8,6 +8,7 @@ class AboutUI(QtWidgets.QWidget, Ui_Dialog):
         self.setupUi(self)
 
 
+# This is for debugging usage
 if __name__ == "__main__":
     app = QtWidgets.QApplication([])
     window = AboutUI()
