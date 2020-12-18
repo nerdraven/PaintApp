@@ -6,9 +6,9 @@ from PyQt5 import QtCore
 
 from build.main import Ui_MainWindow
 
-from widgets.Colorpicker import ColorPicker
-from widgets.about import AboutUI
-from widgets.help import HelpUI
+from widgets.colorpicker import ColorPicker
+from widgets.utils import AboutUI
+from widgets.utils import HelpUI
 
 
 class Main(Ui_MainWindow, QtWidgets.QMainWindow):
