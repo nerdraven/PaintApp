@@ -1,6 +1,7 @@
 import sys
 import random
 from pathlib import Path
+from functools import partial
 
 from PyQt5 import QtCore, QtGui, QtWidgets
 
@@ -32,6 +33,8 @@ class PaintingApplication(QtWidgets.QWidget):
         self.titleBar_event = QtCore.pyqtSignal()
         self.mouseMoveEvent = self.pen_mouseMoveEvent
 
+        self.saveAs = partial(self.save, saveAs=True)
+
     def set_event_outlet(self, status_bar, title_bar):
         self.statusBar_event = status_bar
         self.titleBar_event = title_bar
@@ -51,8 +54,13 @@ class PaintingApplication(QtWidgets.QWidget):
 
     def resizeEvent(self, event):
         self.image = self.image.scaled(self.width(), self.height())
+    #def resizeEvent(self, event):
+        # fitInView(self.pixmap_item, QtCore.Qt.KeepAspectRatio)
+      #  super().resizeEvent(event)
 
-    def save(self):
+    def save(self, saveAs=False):
+        if saveAs == True:
+            self.saved = False
         if not self.saved:
             file_path, _ = QtWidgets.QFileDialog.getSaveFileName(self, "Save Image", "",
                                                                  "PNG(*.png);;JPG(*.jpg *.jpeg);;All Files (*.*)")

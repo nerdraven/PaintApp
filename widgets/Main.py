@@ -23,7 +23,6 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         self.setupUi(self)
         self.setWindowTitle('Paint App')
         self.colorPicker = ColorPicker(self.colorSignal)
-        self.colorPicker.setFixedHeight(30)
         self.side_bar.layout().addWidget(self.colorPicker)
 
         # Additional Widgets
@@ -58,6 +57,7 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         self.action_new.triggered.connect(self.create_new_window)
         self.action_fullScreen.triggered.connect(self.toggle_full_screen)
         self.action_clear.triggered.connect(self.paint_layout.clear)
+        self.action_exit.triggered.connect(self.close)
 
         self.action_sprayPaint.triggered.connect(lambda x: self.set_brush_type('spray'))
         self.action_brush.triggered.connect(lambda x: self.set_brush_type('pen'))
@@ -73,6 +73,7 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         self.action_new.triggered.connect(self.create_new_window)
         self.action_open.triggered.connect(self.paint_layout.open)
         self.action_save.triggered.connect(self.paint_layout.save)
+        self.action_saveAs.triggered.connect(self.paint_layout.saveAs)
 
         # View
         self.action_zoomIn.triggered.connect(lambda x: self.zoom('+'))
@@ -92,6 +93,8 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         self.dotted_line_radio.toggled.connect(lambda x: self.set_lineStyle('dotted'))
         self.dashed_line_radio.toggled.connect(lambda x: self.set_lineStyle('dashed'))
         self.solid_line_radio.toggled.connect(lambda x: self.set_lineStyle('solid'))
+        self.dash_dot_line_radio.toggled.connect(lambda x: self.set_lineStyle('dashdot'))
+        self.dash_dot_dot_line_radio.toggled.connect(lambda x: self.set_lineStyle('dashdotdot'))
 
         # Join Style
         self.miter_join_radio.toggled.connect(lambda x: self.set_joinStyle('miter'))
@@ -144,7 +147,6 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         if brush == 'spray':
             self.paint_layout.mouseMoveEvent = self.paint_layout.spray_mouseMoveEvent
             self.paint_layout.brushSize = 20
-            self.horizontal_slider.setValue(20)
             message = 'Brush is now in Spray mode'
         elif brush == 'pen':
             self.paint_layout.mouseMoveEvent = self.paint_layout.pen_mouseMoveEvent
