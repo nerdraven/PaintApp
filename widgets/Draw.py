@@ -9,9 +9,13 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class PaintingApplication(QtWidgets.QWidget):
 
     def __init__(self, *args, **kwargs):
-
         # Initialization
         super().__init__(*args, **kwargs)
+        self.brushSize = 1                          # The initial brush size
+        self.spray_size = 100                       # The area occupied by one spray
+        self.lastPoint = QtCore.QPoint()            # The coordinates of where the last event occurred
+        self.statusBar_event = QtCore.pyqtSignal()
+        self.titleBar_event = QtCore.pyqtSignal()
 
         # Image canvas
         self.filePath = ''
@@ -20,19 +24,16 @@ class PaintingApplication(QtWidgets.QWidget):
         self.image = QtGui.QImage(self.size(), QtGui.QImage.Format_RGB32)
         self.image.fill(QtCore.Qt.white)
 
-        self.brushSize = 1
-        self.spray_size = 100
-        self.lastPoint = QtCore.QPoint()
-
+        # Default brush values
         self.brushColor = QtCore.Qt.black
         self.penStyle = QtCore.Qt.SolidLine
         self.capStyle = QtCore.Qt.RoundCap
         self.joinStyle = QtCore.Qt.RoundJoin
 
-        self.statusBar_event = QtCore.pyqtSignal()
-        self.titleBar_event = QtCore.pyqtSignal()
+        # Initial events handler
         self.mouseMoveEvent = self.pen_mouseMoveEvent
 
+        # A custom method based on the save method
         self.saveAs = partial(self.save, saveAs=True)
 
     def set_event_outlet(self, status_bar, title_bar):
@@ -52,19 +53,18 @@ class PaintingApplication(QtWidgets.QWidget):
         canvas_painter = QtGui.QPainter(self)
         canvas_painter.drawImage(self.rect(), self.image, self.image.rect())
 
-    def resizeEvent(self, event):
+    def resizeEvent(self, event: QtGui.QMouseEvent):
         self.image = self.image.scaled(self.width(), self.height())
-    #def resizeEvent(self, event):
-        # fitInView(self.pixmap_item, QtCore.Qt.KeepAspectRatio)
-      #  super().resizeEvent(event)
 
-    def save(self, saveAs=False):
-        if saveAs == True:
+    def save(self, save_as=False):
+        if save_as:
             self.saved = False
         if not self.saved:
-            file_path, _ = QtWidgets.QFileDialog.getSaveFileName(self, "Save Image", "",
-                                                                 "PNG(*.png);;JPG(*.jpg *.jpeg);;All Files (*.*)")
+            file_path, _ = QtWidgets.QFileDialog.getSaveFileName(
+                            self, "Save Image", "",
+                                  "PNG(*.png);;JPG(*.jpg *.jpeg);;All Files (*.*)")
             if file_path == "":
+                self.statusBar_event.emit('No file path provided')
                 return
             self.saved = True
             self.filePath = file_path
@@ -83,8 +83,9 @@ class PaintingApplication(QtWidgets.QWidget):
         self.update()
 
     def open(self):
-        file_path, _ = QtWidgets.QFileDialog.getOpenFileName(self, "Open Image", "",
-                                                             "PNG(*.png);;JPG(*.jpg *.jpeg);;All Files (*.*)")
+        file_path, _ = QtWidgets.QFileDialog.getOpenFileName(
+                        self, "Open Image", "",
+                        "PNG(*.png);;JPG(*.jpg *.jpeg);;All Files (*.*)")
         if file_path == "":
             return
         with open(file_path, 'rb') as f:
@@ -95,6 +96,7 @@ class PaintingApplication(QtWidgets.QWidget):
         self.image = self.image.scaled(width, height)
         self.update()
 
+    # All the brushes Handlers
     def pen_mouseMoveEvent(self, event):
         if event.buttons() & QtCore.Qt.LeftButton & self.drawing:
             painter = QtGui.QPainter(self.image)
@@ -127,6 +129,7 @@ class PaintingApplication(QtWidgets.QWidget):
         self.update()
 
 
+# This is available for debugging
 if __name__ == "__main__":
     app = QtWidgets.QApplication(sys.argv)
     window = PaintingApplication()

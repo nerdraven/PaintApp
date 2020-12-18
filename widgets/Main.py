@@ -5,13 +5,15 @@ from PyQt5 import QtGui
 from PyQt5 import QtCore
 
 from build.main import Ui_MainWindow
-from widgets.Colorpicker import ColorPicker
 
+from widgets.Colorpicker import ColorPicker
 from widgets.about import AboutUI
 from widgets.help import HelpUI
 
 
 class Main(Ui_MainWindow, QtWidgets.QMainWindow):
+
+    # Core custom signals
     statusSignal = QtCore.pyqtSignal(str)
     titleSignal = QtCore.pyqtSignal(str)
     colorSignal = QtCore.pyqtSignal(QtGui.QColor)
@@ -20,40 +22,48 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
 
         # Initialize all widgets
         super(Main, self).__init__(*args, **kwargs)
-        self.setupUi(self)
+        self.setupUi(self)  # Connect all widgets to the main window
         self.setWindowTitle('Paint App')
+        self.maximized = False  # To check if the window is in full screen
+
+        # Additional Widgets
+        # Here I am connecting all the widgets not defined in the build package
+
+        # Color picker
         self.colorPicker = ColorPicker(self.colorSignal)
         self.side_bar.layout().addWidget(self.colorPicker)
 
-        # Additional Widgets
+        # Brush thickness
         label = QtWidgets.QLabel('Brush Thickness')
         self.main_toolBar.addWidget(label)
+
         self.main_toolBar.addSeparator()
-        self.main_toolBar.setCursor(QtCore.Qt.PointingHandCursor)
-        self.horizontal_slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
-        self.horizontal_slider.setCursor(QtCore.Qt.PointingHandCursor)
-        self.main_toolBar.addWidget(self.horizontal_slider)
-        self.horizontal_slider.valueChanged.connect(self.change_brush_size)
 
-        # Other Windows
-        self.aboutUi = AboutUI()
-        self.helpUi = HelpUI()
+        self.brush_thickness_slider = QtWidgets.QSlider(QtCore.Qt.Horizontal)
+        self.brush_thickness_slider.setCursor(QtCore.Qt.PointingHandCursor)
+        self.brush_thickness_slider.valueChanged.connect(self.change_brush_size)
+        self.main_toolBar.addWidget(self.brush_thickness_slider)
 
-        # Setup UI
-        self.maximized = False
+        # Other Program windows
+        self.aboutUi = AboutUI()    # This is the About page
+        self.helpUi = HelpUI()      # This is for the Help page
+
+        # Toggle on the default buttons
         self.solid_line_radio.toggle()
         self.round_join_radio.toggle()
         self.round_cap_radio.toggle()
 
-        # Connect custom Signals
+        # Connect all the custom Signals
         self.titleSignal.connect(self.window_title_event)
         self.colorSignal.connect(self.change_brush_color)
         self.statusSignal.connect(self.status_bar_event)
 
         # Connect signals for paint_layout
+        # This way the paint layout could communicate with the status and title bar
         self.paint_layout.set_event_outlet(self.statusSignal, self.titleSignal)
 
         # Connect actions
+        # This consists of all the actions from the menu, context,
         self.action_new.triggered.connect(self.create_new_window)
         self.action_fullScreen.triggered.connect(self.toggle_full_screen)
         self.action_clear.triggered.connect(self.paint_layout.clear)
@@ -63,6 +73,7 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         self.action_brush.triggered.connect(lambda x: self.set_brush_type('pen'))
         self.action_eraser.triggered.connect(lambda x: self.set_brush_type('eraser'))
 
+        # Here I modified the set_pen_color method for their values same thing like lambda
         self.colorPicker.yellow.mousePressEvent = partial(self.set_pen_color, color='yellow')
         self.colorPicker.red.mousePressEvent = partial(self.set_pen_color, color='red')
         self.colorPicker.blue.mousePressEvent = partial(self.set_pen_color, color='blue')
@@ -80,21 +91,27 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         self.action_zoomOut.triggered.connect(lambda x: self.zoom('-'))
 
         # Help
-        self.action_help.triggered.connect(self.open_help)
-        self.action_about.triggered.connect(self.open_about)
+        self.action_help.triggered.connect(self.helpUi.show)
+        self.action_about.triggered.connect(self.aboutUi.show)
 
         # Setup side bar
         # Cap Style
         self.flat_cap_radio.toggled.connect(lambda x: self.set_capStyle('flat'))
         self.round_cap_radio.toggled.connect(lambda x: self.set_capStyle('round'))
         self.square_cap_radio.toggled.connect(lambda x: self.set_capStyle('square'))
+        self.square_cap_radio.setToolTip('<img src=":/icons/icons/paint-brush.png">')
 
         # Line Style
         self.dotted_line_radio.toggled.connect(lambda x: self.set_lineStyle('dotted'))
+        self.dotted_line_radio.setText('..........')
         self.dashed_line_radio.toggled.connect(lambda x: self.set_lineStyle('dashed'))
+        self.dashed_line_radio.setText('----------')
         self.solid_line_radio.toggled.connect(lambda x: self.set_lineStyle('solid'))
+        self.solid_line_radio.setText('____________')
         self.dash_dot_line_radio.toggled.connect(lambda x: self.set_lineStyle('dashdot'))
+        self.dash_dot_line_radio.setText('-.-.-.-.-.-')
         self.dash_dot_dot_line_radio.toggled.connect(lambda x: self.set_lineStyle('dashdotdot'))
+        self.dash_dot_dot_line_radio.setText('-..-..-..-..')
 
         # Join Style
         self.miter_join_radio.toggled.connect(lambda x: self.set_joinStyle('miter'))
@@ -103,9 +120,9 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
 
         # Miscellaneous
         self.statusSignal.emit('Hello World')
-        self.horizontal_slider.setValue(1)
+        self.brush_thickness_slider.setValue(self.paint_layout.brushSize)
 
-    # Signals
+    # Slots to the custom signals
     @QtCore.pyqtSlot(int)
     def change_brush_size(self, size):
         self.paint_layout.brushSize = size
@@ -120,7 +137,7 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         self.setWindowTitle(message.format(title=title))
 
     def contextMenuEvent(self, event, *args, **kwargs):
-        """ For Right click events """
+        """ For all Right click events """
         context_menu = QtWidgets.QMenu(self)
 
         save_action = context_menu.addAction('&Save')
@@ -129,20 +146,15 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         if action == save_action:
             self.paint_layout.save()
         elif action == full_screen_action:
-            self.toogle_full_screen()
+            self.toggle_full_screen()
 
     # Controllers
-    def open_about(self):
-        self.aboutUi.show()
-
-    def open_help(self):
-        self.helpUi.show()
-
-    def set_pen_color(self, *args, color='black'):
+    def set_pen_color(self, color='black'):
         self.paint_layout.brushColor = getattr(QtCore.Qt, color)
         self.statusSignal.emit('Brush now in {} color'.format(color.title()))
 
     def set_brush_type(self, brush):
+        """ Change the brush type by changing the mouseMoveEvent of the paint layout """
         message = ''
         if brush == 'spray':
             self.paint_layout.mouseMoveEvent = self.paint_layout.spray_mouseMoveEvent
@@ -155,34 +167,6 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
             self.paint_layout.mouseMoveEvent = self.paint_layout.eraser_mouseMoveEvent
             message = 'Brush is now in Eraser mode'
         self.statusSignal.emit(message)
-
-    def change_brush_color(self, color):
-        self.paint_layout.brushColor = color
-
-    def toggle_full_screen(self):
-        if not self.maximized:
-            self.showFullScreen()
-            self.maximized = True
-        else:
-            self.showNormal()
-            self.maximized = False
-
-    def create_new_window(self):
-        window = Main(self)
-        window.show()
-
-    def zoom(self, op):
-        """ Change window size and canvas scale """
-        width = self.width()
-        height = self.height()
-        if op == '+':
-            self.setFixedWidth(width + 10)
-            self.setFixedHeight(height + 10)
-            self.statusSignal.emit('Zoomed In')
-        else:
-            self.setFixedWidth(width - 10)
-            self.setFixedHeight(height - 10)
-            self.statusSignal.emit('Zoomed Out')
 
     def set_capStyle(self, val):
         values = {
@@ -212,3 +196,32 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         }
         self.paint_layout.joinStyle = values.pop(val)
         self.statusSignal.emit('Changed the join style to {} join'.format(val))
+
+    def change_brush_color(self, color):
+        self.paint_layout.brushColor = color
+
+    def toggle_full_screen(self):
+        if not self.maximized:
+            self.showFullScreen()
+            self.maximized = True
+        else:
+            self.showNormal()
+            self.maximized = False
+
+    def create_new_window(self):
+        """ Start a new Window with a clean image """
+        window = Main(self)
+        window.show()
+
+    def zoom(self, op):
+        """ Change window size and canvas scale """
+        width = self.width()
+        height = self.height()
+        if op == '+':
+            self.setFixedWidth(width + 10)
+            self.setFixedHeight(height + 10)
+            self.statusSignal.emit('Zoomed In')
+        else:
+            self.setFixedWidth(width - 10)
+            self.setFixedHeight(height - 10)
+            self.statusSignal.emit('Zoomed Out')
