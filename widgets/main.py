@@ -31,6 +31,7 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
 
         # Color picker
         self.colorPicker = ColorPicker(self.colorSignal)
+        self.colorPicker.setMaximumHeight(70)
         self.side_bar.layout().addWidget(self.colorPicker)
 
         # Brush thickness
@@ -64,7 +65,6 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
 
         # Connect actions
         # This consists of all the actions from the menu, context,
-        self.action_new.triggered.connect(self.create_new_window)
         self.action_fullScreen.triggered.connect(self.toggle_full_screen)
         self.action_clear.triggered.connect(self.paint_layout.clear)
         self.action_exit.triggered.connect(self.close)
@@ -143,7 +143,7 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
             self.toggle_full_screen()
 
     # Controllers
-    def set_pen_color(self, color='black'):
+    def set_pen_color(self, args, color='black'):
         self.paint_layout.brushColor = getattr(QtCore.Qt, color)
         self.statusSignal.emit('Brush now in {} color'.format(color.title()))
 
@@ -152,6 +152,7 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         message = ''
         if brush == 'spray':
             self.paint_layout.mouseMoveEvent = self.paint_layout.spray_mouseMoveEvent
+            self.brush_thickness_slider.setValue(20)
             self.paint_layout.brushSize = 20
             message = 'Brush is now in Spray mode'
         elif brush == 'pen':

@@ -33,7 +33,7 @@ class PaintingApplication(QtWidgets.QWidget):
         self.mouseMoveEvent = self.pen_mouseMoveEvent
 
         # A custom method based on the save method
-        self.saveAs = partial(self.save, saveAs=True)
+        self.saveAs = partial(self.save, save_as=True)
 
     def set_event_outlet(self, status_bar, title_bar):
         """ This sets where the signals are been sent to """

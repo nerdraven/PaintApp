@@ -32,7 +32,7 @@
        </size>
       </property>
       <property name="styleSheet">
-       <string notr="true">background-color: rgb(59, 59, 59);</string>
+       <string notr="true">background-color: rgb(108, 108, 108);</string>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_4">
        <item>
@@ -50,7 +50,7 @@
           <string>Change the cap at the end of a lines's curve</string>
          </property>
          <property name="styleSheet">
-          <string notr="true">background-color: rgb(70, 70, 70);</string>
+          <string notr="true"/>
          </property>
          <property name="title">
           <string>Cap Style</string>
@@ -103,9 +103,6 @@
          </property>
          <property name="statusTip">
           <string>Changes how the line gets painted on the canvas</string>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(70, 70, 70);</string>
          </property>
          <property name="title">
           <string>Line Style</string>
@@ -181,9 +178,6 @@
          </property>
          <property name="statusTip">
           <string>Changes the way the bends to another direction</string>
-         </property>
-         <property name="styleSheet">
-          <string notr="true">background-color: rgb(70, 70, 70);</string>
          </property>
          <property name="title">
           <string>Join Style</string>
@@ -290,6 +284,7 @@
      <string>Help</string>
     </property>
     <addaction name="action_about"/>
+    <addaction name="action_help"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuView"/>
@@ -318,7 +313,6 @@
    <addaction name="action_sprayPaint"/>
    <addaction name="action_eraser"/>
    <addaction name="separator"/>
-   <addaction name="action_new"/>
    <addaction name="action_clear_2"/>
    <addaction name="separator"/>
    <addaction name="action_fullScreen"/>
@@ -326,6 +320,11 @@
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
   <action name="action_open">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icons/icons/open-button.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>&amp;Open</string>
    </property>
@@ -361,6 +360,11 @@
    </property>
   </action>
   <action name="action_zoomIn">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icons/icons/zoom-in.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Zoom &amp;In</string>
    </property>
@@ -369,6 +373,11 @@
    </property>
   </action>
   <action name="action_zoomOut">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icons/icons/zoom-out.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>Zoom o&amp;ut</string>
    </property>
@@ -377,6 +386,11 @@
    </property>
   </action>
   <action name="action_fullScreen">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icons/icons/fullscreen.webp</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>F&amp;ull screen</string>
    </property>
@@ -409,8 +423,16 @@
    </property>
   </action>
   <action name="action_new">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icons/icons/add-button.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>New</string>
+   </property>
+   <property name="shortcut">
+    <string>Ctrl+N</string>
    </property>
   </action>
   <action name="action_sprayPaint">
@@ -436,6 +458,11 @@
    </property>
   </action>
   <action name="action_exit">
+   <property name="icon">
+    <iconset>
+     <normalon>:/icons/icons/close-button.png</normalon>
+    </iconset>
+   </property>
    <property name="text">
     <string>&amp;Exit</string>
    </property>

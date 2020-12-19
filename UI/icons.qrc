@@ -1,5 +1,17 @@
 <RCC>
   <qresource prefix="icons">
+    <file>icons/zoom-in.png</file>
+    <file>icons/open-button.png</file>
+    <file>icons/zoom-out.png</file>
+    <file>icons/zoom-out.png</file>
+    <file>icons/zoom-in.png</file>
+    <file>icons/open-file-button.png</file>
+    <file>icons/fullscreen.webp</file>
+    <file>icons/fill.png</file>
+    <file>icons/close-button.png</file>
+    <file>icons/add-button.png</file>
+    <file>icons/add-button.png</file>
+    <file>icons/close-button.png</file>
     <file>icons/save.png</file>
     <file>icons/paint-brush.png</file>
     <file>icons/clear.png</file>
