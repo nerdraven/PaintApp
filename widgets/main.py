@@ -74,10 +74,11 @@ class Main(Ui_MainWindow, QtWidgets.QMainWindow):
         self.action_eraser.triggered.connect(lambda x: self.set_brush_type('eraser'))
 
         # Here I modified the set_pen_color method for their values same thing like lambda
-        self.colorPicker.yellow.mousePressEvent = partial(self.set_pen_color, color='yellow')
+        self.colorPicker.black.mousePressEvent = partial(self.set_pen_color, color='black')
         self.colorPicker.red.mousePressEvent = partial(self.set_pen_color, color='red')
         self.colorPicker.blue.mousePressEvent = partial(self.set_pen_color, color='blue')
         self.colorPicker.green.mousePressEvent = partial(self.set_pen_color, color='green')
+        self.colorPicker.yellow.mousePressEvent = partial(self.set_pen_color, color='yellow')
 
         # Connect menu bar
         # File

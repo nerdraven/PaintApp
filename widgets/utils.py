@@ -8,6 +8,19 @@ class HelpUI(QtWidgets.QWidget, Ui_Form):
         super(HelpUI, self).__init__(*args, **kwargs)
         self.setupUi(self)
 
+        self.about_btn.clicked.connect(lambda x: self.do('about'))
+        self.features_btn.clicked.connect(lambda x: self.do('features'))
+
+    def do(self, button: str):
+        page = ''
+        page = self.load_page("pages/{}.html".format(button.capitalize()))
+        self.main_page.setText(page)
+
+    def load_page(self, page):
+        """ This will load the required HTML to the page """
+        page = open(page, 'r')
+        return page.read()
+
 
 class AboutUI(QtWidgets.QWidget, Ui_Dialog):
     def __init__(self, *args, **kwargs):

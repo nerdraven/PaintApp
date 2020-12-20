@@ -1,36 +1,34 @@
 <RCC>
   <qresource prefix="icons">
-    <file>icons/zoom-in.png</file>
-    <file>icons/open-button.png</file>
-    <file>icons/zoom-out.png</file>
-    <file>icons/zoom-out.png</file>
-    <file>icons/zoom-in.png</file>
-    <file>icons/open-file-button.png</file>
+    <file>icons/more-icon.png</file>
     <file>icons/fullscreen.webp</file>
-    <file>icons/fill.png</file>
-    <file>icons/close-button.png</file>
-    <file>icons/add-button.png</file>
-    <file>icons/add-button.png</file>
-    <file>icons/close-button.png</file>
+    <file>icons/zoom-out.png</file>
+    <file>icons/zoom-in.png</file>
     <file>icons/save.png</file>
-    <file>icons/paint-brush.png</file>
     <file>icons/clear.png</file>
-  </qresource>
-  <qresource prefix="cap">
-    <file>icons/square-cap.png</file>
-    <file>icons/round-cap.png</file>
-    <file>icons/flat-cap.png</file>
-  </qresource>
-  <qresource prefix="join">
-    <file>icons/round-join.png</file>
-    <file>icons/miter-join.png</file>
-    <file>icons/bevel-join.png</file>
+    <file>icons/close-button.png</file>
+    <file>icons/fill.png</file>
+    <file>icons/add-button.png</file>
+    <file>icons/paint-brush.png</file>
+    <file>icons/open-file-button.png</file>
+    <file>icons/open-button.png</file>
   </qresource>
   <qresource prefix="line">
-    <file>icons/solid-line.png</file>
-    <file>icons/dot-line.png</file>
-    <file>icons/dash-dot-line.png</file>
     <file>icons/dash-dot-dot-line.png</file>
+    <file>icons/dash-dot-line.png</file>
     <file>icons/dash-line.png</file>
+    <file>icons/dot-line.png</file>
+    <file>icons/solid-line.png</file>
+  </qresource>
+  <qresource prefix="join">
+    <file>icons.qrc</file>
+    <file>icons/miter-join.png</file>
+    <file>icons/bevel-join.png</file>
+    <file>icons/round-join.png</file>
+  </qresource>
+  <qresource prefix="cap">
+    <file>icons/flat-cap.png</file>
+    <file>icons/square-cap.png</file>
+    <file>icons/round-cap.png</file>
   </qresource>
 </RCC>

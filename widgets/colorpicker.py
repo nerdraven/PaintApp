@@ -6,7 +6,7 @@ class ColorPicker(QtWidgets.QWidget, Ui_colorpicker):
     def __init__(self, color_signal, *args, **kwargs):
         super(ColorPicker, self).__init__(*args, **kwargs)
         self.setupUi(self)
-        self.setMinimumHeight(60)
+        self.setMinimumHeight(50)
 
         # This will update the color of the pen used
         self.color_signal = color_signal
